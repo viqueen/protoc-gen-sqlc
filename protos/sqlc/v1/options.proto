@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/descriptor.proto";
 
-package sqlc.options.v1;
+package sqlc.v1;
 
 extend google.protobuf.MessageOptions {
   string sqlc_entity = 80000;

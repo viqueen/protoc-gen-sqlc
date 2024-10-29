@@ -1,0 +1,12 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/viqueen/protoc-gen-sqlc/api
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: api
+    opt: paths=source_relative
+inputs:
+  - directory: protos
