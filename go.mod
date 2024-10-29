@@ -1,4 +1,4 @@
-module github.com/viqueen/protoc-gen-plugin
+module github.com/viqueen/protoc-gen-sqlc
 
 go 1.23.1
 
