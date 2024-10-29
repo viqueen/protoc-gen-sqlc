@@ -1,0 +1,10 @@
+version: v2
+modules:
+  - path: protos
+    name: buf.build/viqueen/protoc-gen-sqlc
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE
