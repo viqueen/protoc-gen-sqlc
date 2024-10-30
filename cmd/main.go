@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/viqueen/protoc-gen-sqlc/internal/handler"
 	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 	"io"
 	"log"
@@ -21,20 +21,12 @@ func main() {
 
 	response := &pluginpb.CodeGeneratorResponse{}
 	for _, protoFile := range request.GetProtoFile() {
-		processFile(protoFile, response)
-	}
-	respond(response)
-}
-
-func processFile(protoFile *descriptorpb.FileDescriptorProto, response *pluginpb.CodeGeneratorResponse) {
-	services := protoFile.GetService()
-	for _, service := range services {
-		log.Printf("service: %v", service)
-		methods := service.GetMethod()
-		for _, method := range methods {
-			log.Printf("method: %v", method)
+		err = handler.ProtoFileHandler(protoFile, response)
+		if err != nil {
+			response.Error = proto.String(err.Error())
 		}
 	}
+	respond(response)
 }
 
 func respond(resp *pluginpb.CodeGeneratorResponse) {
