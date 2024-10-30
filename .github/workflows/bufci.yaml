@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - run: ./build.sh generate
       - run: |
             git config --global user.email "github-actions[bot]"
@@ -23,7 +25,7 @@ jobs:
       - run: |
           git add api/
           git commit -m "automated code generation" || echo "No changes to commit"
-      - run: git push origin ${GITHUB_HEAD_REF}
+      - run: git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
