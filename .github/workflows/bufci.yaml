@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - name: Determine the branch name
+        run: echo "Current branch is $GITHUB_REF_NAME"
+      - name: Switch to the current branch
+        run: |
+          git checkout $GITHUB_REF_NAME
       - run: ./build.sh generate
       - run: |
             git config --global user.email "github-actions[bot]"
