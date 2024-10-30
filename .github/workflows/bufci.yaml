@@ -23,7 +23,7 @@ jobs:
       - run: |
           git add api/
           git commit -m "automated code generation" || echo "No changes to commit"
-      - run: git push
+      - run: git push origin ${GITHUB_HEAD_REF}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
