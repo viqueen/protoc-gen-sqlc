@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/viqueen/protoc-gen-sqlc/internal/handler"
+	"github.com/viqueen/protoc-gen-sqlc/pkg/handler"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
 	"io"
