@@ -6,4 +6,8 @@ function generate() {
     bufbuild/buf:1.46.0 generate
 }
 
+function local() {
+  goreleaser build --clean --snapshot
+}
+
 eval "$@"
