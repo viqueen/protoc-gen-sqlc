@@ -35,7 +35,7 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 }
 
 func sqlcEntityOption(message *descriptorpb.DescriptorProto) (string, bool) {
-	return hasOption(message, string(sqlcv1.E_SqlcEntity.Field))
+	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcEntity.Name))
 }
 
 func hasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {

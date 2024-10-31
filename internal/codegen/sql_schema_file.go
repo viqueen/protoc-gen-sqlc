@@ -8,7 +8,9 @@ import (
 )
 
 func SQLSchemaFile(message *descriptorpb.DescriptorProto, tableName string) (string, error) {
-	tmpl, err := template.New("sqlSchemaFile").Funcs(template.FuncMap{}).Parse(sqlSchemaFileTemplate)
+	tmpl, err := template.New("sqlSchemaFile").Funcs(template.FuncMap{
+		"add": func(a, b int) int { return a + b },
+	}).Parse(sqlSchemaFileTemplate)
 	if err != nil {
 		return "", err
 	}
