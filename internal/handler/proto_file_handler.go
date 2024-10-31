@@ -3,7 +3,7 @@ package handler
 import (
 	"fmt"
 	sqlcv1 "github.com/viqueen/protoc-gen-sqlc/api/sqlc/v1"
-	"github.com/viqueen/protoc-gen-sqlc/pkg/codegen"
+	"github.com/viqueen/protoc-gen-sqlc/internal/codegen"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 	"strings"

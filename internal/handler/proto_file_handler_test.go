@@ -4,7 +4,7 @@ import (
 	"github.com/jhump/protoreflect/desc/protoparse"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/viqueen/protoc-gen-sqlc/pkg/handler"
+	"github.com/viqueen/protoc-gen-sqlc/internal/handler"
 	"google.golang.org/protobuf/types/pluginpb"
 	"os"
 	"path/filepath"
