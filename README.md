@@ -27,7 +27,7 @@ go mod download
 - codegen
 
 ```bash
-./build.sh codegen
+./build.sh generate
 ```
 
 - build
