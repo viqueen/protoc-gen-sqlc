@@ -13,3 +13,25 @@ Protocol Buffers plugin to generate SQLC queries and schema from proto files.
 ```bash
 go install github.com/<username>/protoc-gen-plugin/cmd@latest
 ```
+
+---
+
+### development setup
+
+- install dependencies
+
+```bash
+go mod download
+```
+
+- codegen
+
+```bash
+./build.sh codegen
+```
+
+- build
+
+```bash
+./build.sh local
+```
