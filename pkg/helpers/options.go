@@ -11,6 +11,10 @@ func SqlcEntityOption(message *descriptorpb.DescriptorProto) (string, bool) {
 	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcEntity.TypeDescriptor().FullName()))
 }
 
+func SqlcRequestOption(message *descriptorpb.DescriptorProto) (string, bool) {
+	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcRequest.TypeDescriptor().FullName()))
+}
+
 func hasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {
 	options := message.GetOptions()
 	if options == nil {
