@@ -4,8 +4,10 @@ import (
 	"fmt"
 	sqlcv1 "github.com/viqueen/protoc-gen-sqlc/api/sqlc/v1"
 	"github.com/viqueen/protoc-gen-sqlc/internal/codegen"
+	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
+	"path/filepath"
 	"strings"
 )
 
@@ -22,13 +24,26 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 		}
 		trimmedTableName := strings.Trim(tableName, "\"")
 		sqlSchemaFileName := fmt.Sprintf("V%04d__%s_table.sql", migrationIndex, trimmedTableName)
+		sqlSchemaFilePath := filepath.Join("data", "schema", sqlSchemaFileName)
 		sqlSchemaFileContent, err := codegen.SQLSchemaFile(message, trimmedTableName)
 		if err != nil {
 			return err
 		}
 		response.File = append(response.File, &pluginpb.CodeGeneratorResponse_File{
-			Name:    &sqlSchemaFileName,
-			Content: &sqlSchemaFileContent,
+			Name:    proto.String(sqlSchemaFilePath),
+			Content: proto.String(sqlSchemaFileContent),
+		})
+		migrationIndex++
+
+		sqlQueriesFileName := fmt.Sprintf("%s_queries.sql", trimmedTableName)
+		sqlQueriesFilePath := filepath.Join("data", "queries", sqlQueriesFileName)
+		sqlQueriesFileContent, err := codegen.SQLQueriesFile(message, trimmedTableName)
+		if err != nil {
+			return err
+		}
+		response.File = append(response.File, &pluginpb.CodeGeneratorResponse_File{
+			Name:    proto.String(sqlQueriesFilePath),
+			Content: proto.String(sqlQueriesFileContent),
 		})
 	}
 	return nil
