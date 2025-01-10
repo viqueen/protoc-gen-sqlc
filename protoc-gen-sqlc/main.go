@@ -18,14 +18,15 @@ func main() {
 	if err = proto.Unmarshal(data, request); err != nil {
 		log.Fatalf("failed to unmarshal input: %v", err)
 	}
-
 	response := &pluginpb.CodeGeneratorResponse{}
 	for _, protoFile := range request.GetProtoFile() {
+		log.Printf("Processing proto file: %s", protoFile.GetName())
 		err = handler.ProtoFileHandler(protoFile, response)
 		if err != nil {
 			response.Error = proto.String(err.Error())
 		}
 	}
+	log.Printf("Generating %d files", len(response.GetFile()))
 	respond(response)
 }
 

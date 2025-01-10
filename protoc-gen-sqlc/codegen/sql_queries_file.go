@@ -63,7 +63,7 @@ RETURNING *;
 -- name: Update{{ .TableName | title }} :one
 -- Update{{ .TableName | title }} updates a {{ .TableName | title | lower }}.
 UPDATE public.{{ .TableName }}
-SET {{ join .Columns ", " }} = {{ range $index, $column := .Columns }}@{{$column}}{{ if ne $index (sub (len $.Columns) 1)}} , {{ end }}{{ end }}
+SET {{ range $index, $column := .Columns }}{{ $column }} = @{{$column}}{{ if ne $index (sub (len $.Columns) 1)}} , {{ end }}{{ end }}
 WHERE id = @id
 RETURNING *;
 
