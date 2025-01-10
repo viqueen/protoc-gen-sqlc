@@ -4,9 +4,9 @@ go 1.23.1
 
 require (
 	github.com/bufbuild/protocompile v0.14.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	golang.org/x/text v0.21.0
-	google.golang.org/protobuf v1.35.1
+	google.golang.org/protobuf v1.36.2
 )
 
 require (
