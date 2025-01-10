@@ -6,7 +6,7 @@ import (
 	"github.com/bufbuild/protocompile/protoutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/viqueen/protoc-gen-sqlc/internal/handler"
+	"github.com/viqueen/protoc-gen-sqlc/cmd/handler"
 	"google.golang.org/protobuf/types/pluginpb"
 	"os"
 	"path/filepath"
