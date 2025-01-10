@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/viqueen/protoc-gen-sqlc/internal/handler"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
 	"io"
 	"log"
 	"os"
+	"protoc-gen-sqlc/internal/handler"
 )
 
 func main() {

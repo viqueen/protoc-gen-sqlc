@@ -2,8 +2,8 @@ package helpers
 
 import (
 	"fmt"
-	sqlcv1 "github.com/viqueen/protoc-gen-sqlc/api/sqlc/v1"
 	"google.golang.org/protobuf/types/descriptorpb"
+	sqlcv1 "protoc-gen-sqlc/api/sqlc/v1"
 	"strings"
 )
 
