@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"github.com/viqueen/protoc-gen-sqlc/cmd/codegen"
 	"github.com/viqueen/protoc-gen-sqlc/pkg/helpers"
+	"github.com/viqueen/protoc-gen-sqlc/protoc-gen-sqlc/codegen"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
