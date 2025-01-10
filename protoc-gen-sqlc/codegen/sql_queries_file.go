@@ -78,8 +78,8 @@ RETURNING *;
 SELECT * FROM public.{{ .TableName }}
 WHERE id = @id;
 
--- name: List{{ .TableName | title }} :many
--- List{{ .TableName | title }} lists all {{ .TableName | title | lower }}.
+-- name: List{{ .TableName | title }}s :many
+-- List{{ .TableName | title }}s lists all {{ .TableName | title | lower }}.
 SELECT * FROM public.{{ .TableName }}
 {{ range $index, $column := .IdColumns }} AND (@{{ $column }} IS NULL OR {{ $column }} = @{{ $column }}){{ end }}
 LIMIT @page_limit OFFSET @page_offset;
