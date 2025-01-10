@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	sqlcv1 "github.com/viqueen/protoc-gen-sqlc/api/sqlc/v1"
 	"github.com/viqueen/protoc-gen-sqlc/internal/codegen"
+	"github.com/viqueen/protoc-gen-sqlc/pkg/helpers"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
@@ -18,7 +18,7 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 	}
 	migrationIndex := 0
 	for _, message := range messages {
-		tableName, ok := sqlcEntityOption(message)
+		tableName, ok := helpers.SqlcEntityOption(message)
 		if !ok {
 			continue
 		}
@@ -47,28 +47,4 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 		})
 	}
 	return nil
-}
-
-func sqlcEntityOption(message *descriptorpb.DescriptorProto) (string, bool) {
-	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcEntity.TypeDescriptor().FullName()))
-}
-
-func hasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {
-	options := message.GetOptions()
-	if options == nil {
-		return "", false
-	}
-	optionsMap := parseOptions(options.String())
-	value, ok := optionsMap[option]
-	return value, ok
-}
-
-func parseOptions(options string) map[string]string {
-	optionsMap := make(map[string]string)
-	tokens := strings.Split(options, " ")
-	for _, token := range tokens {
-		parts := strings.Split(token, ":")
-		optionsMap[parts[0]] = parts[1]
-	}
-	return optionsMap
 }
