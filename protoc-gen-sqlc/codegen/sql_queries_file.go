@@ -81,6 +81,8 @@ WHERE id = @id;
 -- name: List{{ .TableName | title }}s :many
 -- List{{ .TableName | title }}s lists all {{ .TableName | title | lower }}.
 SELECT * FROM public.{{ .TableName }}
-{{ range $index, $column := .IdColumns }} AND (@{{ $column }} IS NULL OR {{ $column }} = @{{ $column }}){{ end }}
+{{ if gt (len $.IdColumns) 0  }}
+WHERE {{ range $index, $column := .IdColumns }}{{ $column }} = @{{ $column }}{{ if ne $index (sub (len $.IdColumns) 1)}} AND {{ end }}{{ end }}
+{{ end }}
 LIMIT @page_limit OFFSET @page_offset;
 `
