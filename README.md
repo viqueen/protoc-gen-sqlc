@@ -11,7 +11,7 @@ Protocol Buffers plugin to generate SQLC queries and schema from proto files.
 - using **go**
 
 ```bash
-go install github.com/viqueen/protoc-gen-sqlc/cmd@latest
+go install github.com/viqueen/protoc-gen-sqlc@latest
 ```
 
 ---
