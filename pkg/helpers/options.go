@@ -8,14 +8,28 @@ import (
 )
 
 func SqlcEntityOption(message *descriptorpb.DescriptorProto) (string, bool) {
-	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcEntity.TypeDescriptor().FullName()))
+	return messageHasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcEntity.TypeDescriptor().FullName()))
 }
 
 func SqlcRequestOption(message *descriptorpb.DescriptorProto) (string, bool) {
-	return hasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcRequest.TypeDescriptor().FullName()))
+	return messageHasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcRequest.TypeDescriptor().FullName()))
 }
 
-func hasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {
+func SqlcFkOption(message *descriptorpb.FieldDescriptorProto) (string, bool) {
+	return fieldHasOption(message, fmt.Sprintf("[%s]", sqlcv1.E_SqlcFk.TypeDescriptor().FullName()))
+}
+
+func fieldHasOption(field *descriptorpb.FieldDescriptorProto, option string) (string, bool) {
+	options := field.GetOptions()
+	if options == nil {
+		return "", false
+	}
+	optionsMap := parseOptions(options.String())
+	value, ok := optionsMap[option]
+	return value, ok
+}
+
+func messageHasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {
 	options := message.GetOptions()
 	if options == nil {
 		return "", false

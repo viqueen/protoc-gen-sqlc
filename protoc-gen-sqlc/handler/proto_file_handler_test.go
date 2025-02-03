@@ -36,10 +36,12 @@ func TestProtoFileHandler(t *testing.T) {
 		protoDescriptor := protoutil.ProtoFromFileDescriptor(desc)
 		err = handler.ProtoFileHandler(protoDescriptor, response)
 		assert.NoError(t, err)
-		assert.Len(t, response.File, 4)
-		assert.Equal(t, "data/schema/V0000__album_table.sql", response.File[0].GetName())
-		assert.Equal(t, "data/queries/album_queries.sql", response.File[1].GetName())
-		assert.Equal(t, "data/schema/V0001__track_table.sql", response.File[2].GetName())
-		assert.Equal(t, "data/queries/track_queries.sql", response.File[3].GetName())
+		assert.Len(t, response.File, 6)
+		assert.Equal(t, "data/schema/V0000__tenant_table.sql", response.File[0].GetName())
+		assert.Equal(t, "data/queries/tenant_queries.sql", response.File[1].GetName())
+		assert.Equal(t, "data/schema/V0001__album_table.sql", response.File[2].GetName())
+		assert.Equal(t, "data/queries/album_queries.sql", response.File[3].GetName())
+		assert.Equal(t, "data/schema/V0002__track_table.sql", response.File[4].GetName())
+		assert.Equal(t, "data/queries/track_queries.sql", response.File[5].GetName())
 	}
 }

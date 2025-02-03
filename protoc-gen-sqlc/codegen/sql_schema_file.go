@@ -2,6 +2,7 @@ package codegen
 
 import (
 	"bytes"
+	"github.com/viqueen/protoc-gen-sqlc/pkg/helpers"
 	"google.golang.org/protobuf/types/descriptorpb"
 	"strings"
 	"text/template"
@@ -66,17 +67,26 @@ func extractSQLSchemaFileParams(message *descriptorpb.DescriptorProto, tableName
 			column.SQLType = "UUID"
 		}
 
-		// TODO: handle field options instead
 		// Determine the foreign keys
 		if strings.HasSuffix(field.GetName(), "_id") {
 			column.SQLType = "UUID"
 			column.Constraint = "NOT NULL"
-			referencesTable := strings.TrimSuffix(field.GetName(), "_id")
-			foreignKeys = append(foreignKeys, sqlForeignKey{
-				ColumnName:       field.GetName(),
-				ReferencesTable:  referencesTable,
-				ReferencesColumn: "id",
-			})
+			target, ok := helpers.SqlcFkOption(field)
+			if !ok {
+				referencesTable := strings.TrimSuffix(field.GetName(), "_id")
+				foreignKeys = append(foreignKeys, sqlForeignKey{
+					ColumnName:       field.GetName(),
+					ReferencesTable:  referencesTable,
+					ReferencesColumn: "id",
+				})
+			} else {
+				parts := strings.Split(target, ".")
+				foreignKeys = append(foreignKeys, sqlForeignKey{
+					ColumnName:       field.GetName(),
+					ReferencesTable:  parts[0],
+					ReferencesColumn: parts[1],
+				})
+			}
 		}
 
 		columns = append(columns, column)
