@@ -4,6 +4,13 @@ import "sqlc/v1/options.proto";
 
 package music.v1;
 
+message Tenant {
+  option(sqlc.v1.sqlc_entity) = "tenant";
+
+  string id = 1;
+  string name = 2;
+}
+
 message Album {
   option(sqlc.v1.sqlc_entity) = "album";
 
@@ -17,4 +24,5 @@ message Track {
   string id = 1;
   string name = 2;
   string album_id = 3;
+  string org_id = 4 [(sqlc.v1.sqlc_fk) = "tenant.id"];
 }
