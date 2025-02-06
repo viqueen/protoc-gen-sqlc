@@ -56,6 +56,12 @@ func extractSQLSchemaFileParams(message *descriptorpb.DescriptorProto, tableName
 		case descriptorpb.FieldDescriptorProto_TYPE_STRING:
 			column.SQLType = "VARCHAR(255)"
 			column.Constraint = "NOT NULL DEFAULT ''"
+		case descriptorpb.FieldDescriptorProto_TYPE_INT64:
+			column.SQLType = "BIGINT"
+			column.Constraint = "NOT NULL DEFAULT 0"
+		case descriptorpb.FieldDescriptorProto_TYPE_INT32:
+			column.SQLType = "INTEGER"
+			column.Constraint = "NOT NULL DEFAULT 0"
 		default:
 			column.SQLType = "TEXT"
 		}
