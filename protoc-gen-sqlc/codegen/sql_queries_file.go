@@ -54,32 +54,32 @@ func extractSQLQueriesFileParams(message *descriptorpb.DescriptorProto, tableNam
 }
 
 var sqlQueriesFileTemplate = `
--- name: Create{{ .TableName | title }} :one
--- Create{{ .TableName | title }} creates a new {{ .TableName | title | lower }}.
+-- name: Create{{ .MessageName }} :one
+-- Create{{ .MessageName }} creates a new {{ .MessageName | title | lower }}.
 INSERT INTO public.{{ .TableName }} ({{ join .Columns ", " }}) 
 VALUES ({{ range $index, $column := .Columns }}@{{$column}}{{ if ne $index (sub (len $.Columns) 1)}} , {{ end }}{{ end }})
 RETURNING *;
 
--- name: Update{{ .TableName | title }} :one
--- Update{{ .TableName | title }} updates a {{ .TableName | title | lower }}.
+-- name: Update{{ .MessageName }} :one
+-- Update{{ .MessageName }} updates a {{ .MessageName | title | lower }}.
 UPDATE public.{{ .TableName }}
 SET {{ range $index, $column := .Columns }}{{ $column }} = @{{$column}}{{ if ne $index (sub (len $.Columns) 1)}} , {{ end }}{{ end }}
 WHERE id = @id
 RETURNING *;
 
--- name: Delete{{ .TableName | title }} :one
--- Delete{{ .TableName | title }} deletes a {{ .TableName | title | lower }}.
+-- name: Delete{{ .MessageName }} :one
+-- Delete{{ .MessageName }} deletes a {{ .MessageName | title | lower }}.
 DELETE FROM public.{{ .TableName }}
 WHERE id = @id
 RETURNING *;
 
--- name: Get{{ .TableName | title }} :one
--- Get{{ .TableName | title }} gets a {{ .TableName | title | lower }} by id.
+-- name: Get{{ .MessageName }} :one
+-- Get{{ .MessageName }} gets a {{ .MessageName | title | lower }} by id.
 SELECT * FROM public.{{ .TableName }}
 WHERE id = @id;
 
--- name: List{{ .TableName | title }}s :many
--- List{{ .TableName | title }}s lists all {{ .TableName | title | lower }}.
+-- name: List{{ .MessageName }}s :many
+-- List{{ .MessageName }}s lists all {{ .MessageName | title | lower }}.
 SELECT * FROM public.{{ .TableName }}
 {{ if gt (len $.IdColumns) 0  }}
 WHERE {{ range $index, $column := .IdColumns }}{{ $column }} = @{{ $column }}{{ if ne $index (sub (len $.IdColumns) 1)}} AND {{ end }}{{ end }}
