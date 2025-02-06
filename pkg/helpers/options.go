@@ -24,9 +24,7 @@ func fieldHasOption(field *descriptorpb.FieldDescriptorProto, option string) (st
 	if options == nil {
 		return "", false
 	}
-	optionsMap := parseOptions(options.String())
-	value, ok := optionsMap[option]
-	return value, ok
+	return hasOption(options.String(), option)
 }
 
 func messageHasOption(message *descriptorpb.DescriptorProto, option string) (string, bool) {
@@ -34,9 +32,16 @@ func messageHasOption(message *descriptorpb.DescriptorProto, option string) (str
 	if options == nil {
 		return "", false
 	}
-	optionsMap := parseOptions(options.String())
+	return hasOption(options.String(), option)
+}
+
+func hasOption(options string, option string) (string, bool) {
+	optionsMap := parseOptions(options)
 	value, ok := optionsMap[option]
-	return value, ok
+	if !ok {
+		return "", false
+	}
+	return strings.Trim(value, "\""), ok
 }
 
 func parseOptions(options string) map[string]string {

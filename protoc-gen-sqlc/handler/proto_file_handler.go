@@ -8,7 +8,6 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 	"google.golang.org/protobuf/types/pluginpb"
 	"path/filepath"
-	"strings"
 )
 
 func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *pluginpb.CodeGeneratorResponse) error {
@@ -22,10 +21,9 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 		if !ok {
 			continue
 		}
-		trimmedTableName := strings.Trim(tableName, "\"")
-		sqlSchemaFileName := fmt.Sprintf("V%04d__%s_table.sql", migrationIndex, trimmedTableName)
+		sqlSchemaFileName := fmt.Sprintf("V%04d__%s_table.sql", migrationIndex, tableName)
 		sqlSchemaFilePath := filepath.Join("data", "schema", sqlSchemaFileName)
-		sqlSchemaFileContent, err := codegen.SQLSchemaFile(message, trimmedTableName)
+		sqlSchemaFileContent, err := codegen.SQLSchemaFile(message, tableName)
 		if err != nil {
 			return err
 		}
@@ -35,9 +33,9 @@ func ProtoFileHandler(protoFile *descriptorpb.FileDescriptorProto, response *plu
 		})
 		migrationIndex++
 
-		sqlQueriesFileName := fmt.Sprintf("%s_queries.sql", trimmedTableName)
+		sqlQueriesFileName := fmt.Sprintf("%s_queries.sql", tableName)
 		sqlQueriesFilePath := filepath.Join("data", "queries", sqlQueriesFileName)
-		sqlQueriesFileContent, err := codegen.SQLQueriesFile(message, trimmedTableName)
+		sqlQueriesFileContent, err := codegen.SQLQueriesFile(message, tableName)
 		if err != nil {
 			return err
 		}
