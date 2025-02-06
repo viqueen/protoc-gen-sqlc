@@ -16,6 +16,7 @@ message Album {
 
   string id = 1;
   string name = 2;
+  int64 bitmap_index = 3;
 }
 
 message Track {
@@ -25,4 +26,5 @@ message Track {
   string name = 2;
   string album_id = 3;
   string org_id = 4 [(sqlc.v1.sqlc_fk) = "tenant.id"];
+  int64 bitmap_index = 5;
 }
