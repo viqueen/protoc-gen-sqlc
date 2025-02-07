@@ -27,4 +27,5 @@ message Track {
   string album_id = 3;
   string org_id = 4 [(sqlc.v1.sqlc_fk) = "tenant.id"];
   int64 bitmap_index = 5;
+  bool is_published = 6;
 }
